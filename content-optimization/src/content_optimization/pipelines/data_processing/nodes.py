@@ -77,6 +77,10 @@ def standardize_columns(
                 df, columns_to_add, columns_to_keep, default_columns, content_category
             )
 
+            # Strip all whitespaces across all strings in dataframe
+            # See: https://github.com/Wilsven/healthhub-content-optimization/issues/53
+            df = df.map(lambda x: x.strip() if isinstance(x, str) else x)
+
             # Mark articles with no content or with dummy content in `to_remove` column
             df["to_remove"] = df["content_body"].apply(
                 lambda x: (
