@@ -473,7 +473,10 @@ class Azure(LLMInterface):
         res = chain.invoke({"Content": content})
         response = re.sub(" +", " ", res)
 
-        return response
+        if "True" in response:
+            return True
+        else:
+            return False
 
     def generate_keypoints(self, article: str):
         """

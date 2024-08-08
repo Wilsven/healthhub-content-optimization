@@ -546,7 +546,6 @@ class AzurePrompts(LLMPrompt):
                 """,
             ),
             ("human", "Merge the keypoints below:\n{Keypoints}"),
-
         ]
         return compiler_prompt
 
@@ -715,53 +714,43 @@ class AzurePrompts(LLMPrompt):
                 "system",
                 """ You are part of a article re-writing process. The article content is aimed to educate readers about a particular topic.
 
-                Your task is to improve the readability of the given article.
-                You must rewrite the content based on the a set of personality and voice guidelines provided below.
+                Your objective is to rewrite the given article to based on the given guidelines and insructions. Follow the personality and voice guidelines below and adhere to the specific instructions provided.
 
-                You will also be given a set of instructions that you MUST follow.
+                Guidelines:
 
-                Rewrite the content based on the guidelines here.
-                ### Start of guidelines
-                    The goal of rewriting the content is to build credibility and confidence in readers. Every point has a set of guidelines you should adopt in your writing along with an example that you should emulate.
-                    You should check these guidelines with your writing carefully step by step.
+                    Be approachable
+                    Guidelines: Welcome your readers warmly, understand their needs, and accommodate them. Account for diverse needs and health conditions.
+                    Example: “Living with diabetes doesn't mean you can’t travel. With proper planning, you can still make travel plans safely.”
 
-                    1. Approachable
-                        Guidelines: You should welcome your reader warmly, understand their needs and accommodate to them wherever possible. You should also account for diverse needs and differing health conditions of all visitors
-                        Example: “Living with diabetes doesn't mean you can’t travel. With proper planning, you can still make travel plans safely.”
+                    Be progressive
+                    Guidelines: Ensure your writing is relevant to the visitor's needs and expectations.
+                    Example: “Worried about new COVID-19 variants? Hear from our experts on infectious diseases and learn how you can stay safe!”
 
-                    2. Progressive
-                        Guidelines: Your writing should be relevant to the visitor's needs and expectations.
-                        Example: “Worried about new COVID-19 variants? Hear from our experts on infectious diseases and learn how you can stay safe!”
+                    Crafted
+                    Guidelines: Personalize the experience for visitors with relevant content.
+                    Example: “Are you a new mum returning to work soon? Here are some tips to help you maintain your milk supply while you work from the office.”
 
-                    3. Crafted
-                        Guidelines: You should personalize experiences for visitors with relevant content in the article.
-                        Example: “Are you a new mum returning to work soon? Here are some tips to help you maintain your milk supply while you work from the office.”
+                    Carry an Optimistic tone
+                    Guidelines: Use a positive tone to motivate readers to lead a healthier lifestyle and empathize with their struggles.
+                    Example: “It’s normal to feel stressed, worried or even sad with the daily demands of daily life. And it’s okay to reach out for help and support when you need it.”
 
-                    4. Optimistic
-                        Guidelines: Your writing should carry a positive tone to motivate visitors to lead a healthier lifestyle. You should also empathise with the struggles of the readers.
-                        Example: “It’s normal to feel stressed, worried or even sad with the daily demands of daily life. And it’s okay to reach out for help and support when you need it.”
+                    Connect at a personal level
+                    Guidelines: Convey a tone that is caring, sensitive, warm, and tactful.
+                    Example: “Breast cancer is known to be asymptomatic in the early stages. That’s why regular screenings can provide early detection and timely intervention.”
 
-                    5. Personal
-                        Guidelines: Your writing should carry a tone that is caring, sensitive, warm and tactful
-                        Example: “Breast cancer is known to be asymptomatic in the early stages. That’s why regular screenings can provide early detection and timely intervention.”
+                    Human-centric writing
+                    Guidelines: Show concern for the reader’s current health state without judgment.
+                    Example: "We admire you for taking care of your loved ones. But have you taken some time for yourself lately? Here are some ways you can practice self-care."
 
-                    6. Human-centric
-                        Guidelines: Your writing should concern for visitors’ current health state, without judgment or prescriptive
-                        Example: "We admire you for taking care of your loved ones. But have you taken some time for yourself lately? Here are some ways you can practice self-care."
+                    Be respectful
+                    Guidelines: Be respectful to all visitors, regardless of medical condition, race, religion, gender, age, etc.
+                    Example: "Diabetes affects people of all ages, genders, and backgrounds. With the right care and support, people living with diabetes can lead healthy and fulfilling lives."
 
-                    7. Respectful
-                        Guidelines: You should craft your writing to be respectful to visitors regardless of medical condition, race, religion, gender, age, etc.
-                        Example: "Diabetes affects people of all ages, genders and backgrounds. With the right care and support, people living with diabetes can lead healthy and fulfilling lives."
-                ### End of guidelines
-
-                ### Start of instructions
-                    You MUST follow these instructions when writing out your content.
-
-                    You MUST use the writing guidelines given above to rewrite the content.
-                    You should use the examples given under each keypoint to structure your writing.
-                    Do NOT combine bullet points into sentences if there are more than 5 bullet points in a section.
-                    Do NOT include any of the prompt instructions inside your response. The reader must NOT know what is inside the prompts
-                ### End of instructions""",
+                Instructions
+                    Mandatory Use of Guidelines: Use the writing guidelines above to rewrite the content.
+                    Example Structure: Follow the structure of the examples given under each key point.
+                    Bullet Points: Do not combine bullet points into sentences if there are more than 5 bullet points in a section.
+                    No Prompt Instructions: Do not include any of these prompt instructions in your response. The reader should not be aware of these prompts.""",
             ),
             (
                 "human",
@@ -780,7 +769,7 @@ class AzurePrompts(LLMPrompt):
                 """
                 Your task is to improve the readability of the provided text. Utilize the Hemingway scoring system and the additional feedback below to create a more accessible and engaging version:
 
-                Follow these guidelines to achieve a clearer and more concise version:
+                You can improve the readability of the content by following these tips.
 
                     Shorten Sentences: Break long sentences into shorter ones. Only use long sentences for narratives or logical chains.
                     Clear Paragraphs: Create clear and concise paragraphs by dividing large text blocks into smaller sections.
@@ -790,7 +779,9 @@ class AzurePrompts(LLMPrompt):
                     Limit Adverbs: Reduce adverb use to make writing more vivid. For example, use "tiptoe" instead of "walk slowly."
                     Active Voice: Use active voice to engage the audience and make the writing more direct.
                     Improve Flow: Ensure smooth flow and coherence throughout the text.
-                    Focus on making the content easy to read and understand while maintaining the original meaning
+                    Focus on making the content easy to read and understand while maintaining the original meaning.
+
+                Check through each tip carefully.
 
                 By adhering to these guidelines, aim to produce a version of the text that is easy to read and understand while preserving the original message and intent.
                 """,
@@ -849,7 +840,7 @@ class AzurePrompts(LLMPrompt):
                 ### End of guidelines
 
                 Your final answer MUST either be "True" or "False".
-                If the given content does not follow the writing guidelines, your final answer will be "False".
+                If the given content does not fits the writing guidelines, your final answer will be "False".
                 Otherwise, if you determined that the given content adheres to the writing guidelines, your final answer will be "True".
                 """,
             ),

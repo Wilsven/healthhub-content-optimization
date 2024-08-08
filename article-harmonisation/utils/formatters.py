@@ -90,9 +90,11 @@ def concat_headers_to_content(articles: list):
         for header_details in article_headers:
             header_title = header_details[0].as_py()
             header_type = header_details[1].as_py()
+            # checks if the specific header type exists as a key in header_dictionary
             header_list = header_dictionary.get(header_type, [])
             header_list.append(header_title)
             header_dictionary[header_type] = header_list
+
             match header_type:
                 case "h1":
                     header = f"h1 Main Header: {header_title}"
@@ -140,11 +142,11 @@ def concat_headers_to_content(articles: list):
 def extract_article_details(articles: list):
     article_ids = []
     urls = []
-    article_indexes = article_list_indexes(articles)
+    article_indexes = get_article_list_indexes(articles)
     for i in range(len(articles)):
         idx = article_indexes[i]
-        article_ids.append(int(table[ARTICLE_ID][idx]))
-        urls.append(str(table[ARTICLE_URL][idx]))
+        article_ids.append(int(MERGED_DF[ARTICLE_ID][idx]))
+        urls.append(str(MERGED_DF[ARTICLE_URL][idx]))
 
     return article_ids, urls
 

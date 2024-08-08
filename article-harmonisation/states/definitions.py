@@ -17,6 +17,7 @@ class ArticleInputs(TypedDict):
 class ContentFlags(TypedDict):
     is_unreadable: bool
     low_word_count: bool
+    has_personality: bool  # from the personality evaluation node to determine if the optimised writing still meets the guideliens of the HH voice and personality
 
 
 class ContentJudge(TypedDict):
@@ -58,6 +59,7 @@ class OptimisationFlags(TypedDict):
     flag_for_content_optimisation: bool
     flag_for_title_optimisation: bool
     flag_for_meta_desc_optimisation: bool
+    flag_for_writing_optimisation: bool
 
 
 class OptimisationAgents(TypedDict):
@@ -67,3 +69,6 @@ class OptimisationAgents(TypedDict):
     writing_optimisation_agent: LLMInterface
     title_optimisation_agent: LLMInterface
     meta_desc_optimisation_agent: LLMInterface
+    readability_optimisation_agent: LLMInterface
+    personality_evaluation_agent: LLMInterface
+    writing_evaluation_agent: LLMInterface

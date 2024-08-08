@@ -27,7 +27,6 @@ MAX_NEW_TOKENS = settings.MAX_NEW_TOKENS
 MODEL = settings.MODEL_NAME
 
 
-
 class ChecksState(TypedDict):
     """This class contains the different keys relevant to the project. It inherits from the TypedDict class.
 
