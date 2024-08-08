@@ -5,10 +5,19 @@ generated using Kedro 0.19.6
 
 from typing import Any
 
+import numpy as np
 import pandas as pd
+from alive_progress import alive_bar
+from content_optimization.pipelines.feature_engineering.utils import (
+    pool_embeddings,
+    split_into_chunks,
+)
 from keybert import KeyBERT
 from keyphrase_vectorizers import KeyphraseTfidfVectorizer
+from nltk.tokenize import sent_tokenize
 from pytictoc import TicToc
+from sentence_transformers import SentenceTransformer
+from transformers import AutoTokenizer
 
 
 def extract_keywords(
@@ -104,3 +113,145 @@ def extract_keywords(
     filtered_data_with_keywords[f"keywords_{model}"] = keywords
 
     return filtered_data_with_keywords
+
+
+def generate_embeddings(
+    filtered_data_with_keywords: pd.DataFrame,
+    model: str,
+    owner: str,
+    trust_remote_code: bool,
+    pooling_strategy: str,
+    columns_to_keep_emb: list[str],
+    columns_to_emb: list[str],
+) -> pd.DataFrame:
+    """
+    Generates embeddings on columns specified in columns_to_emb and
+    returns a DataFrame with added embeddings columns
+
+    Args:
+        filtered_data_with_keywords (pd.DataFrame): The filtered DataFrame with extracted keywords.
+        model (str): Embedding model.
+        owner (str): Owner of embedding model.
+        trust_remote_code (bool): Specifies if trust_remote_code is required.
+        pooling_strategy (str): Pooling strategy of chunk embeddings.
+        columns_to_emb (list[str]): List of column names to generate embeddings.
+
+    Returns:
+        pd.DataFrame: The DataFrame with the generated embeddings.
+    """
+
+    df_filtered = filtered_data_with_keywords.copy()
+
+    df_filtered = df_filtered.loc[:, columns_to_keep_emb]
+    df_filtered["keywords_all-MiniLM-L6-v2"] = df_filtered[
+        "keywords_all-MiniLM-L6-v2"
+    ].apply(lambda x: " ".join(x))
+
+    # Load the tokenizer and model
+    if trust_remote_code:
+        sentence_transformer = SentenceTransformer(
+            f"{owner}/{model}", trust_remote_code=True
+        )
+    else:
+        sentence_transformer = SentenceTransformer(f"{owner}/{model}")
+    tokenizer = AutoTokenizer.from_pretrained(f"{owner}/{model}")
+    max_length = sentence_transformer.max_seq_length
+
+    embedding_dict = {col: [] for col in columns_to_emb}
+
+    embeddings_data = df_filtered.copy()
+
+    for col_name, embedding_list in embedding_dict.items():
+        with alive_bar((embeddings_data["id"].nunique()), force_tty=True) as bar:
+            print(f"Generating embeddings for {col_name}")
+            for id in embeddings_data["id"].unique():
+                text = embeddings_data.query("id == @id")[col_name].values[0]
+
+                if not text:
+                    # Store empty array
+                    dim = sentence_transformer.get_sentence_embedding_dimension()
+                    embeddings = np.empty((dim,), dtype=np.float32)
+                else:
+                    # Step 1: Split the article into sentences
+                    sentences = sent_tokenize(text)
+
+                    # Step 2: Tokenize sentences and split into chunks of max 256 tokens
+                    chunks = split_into_chunks(sentences, max_length, tokenizer)
+
+                    # Step 3: Encode each chunk to get their embeddings
+                    chunk_embeddings = [
+                        sentence_transformer.encode(chunk) for chunk in chunks
+                    ]
+
+                    # Step 4: Aggregate chunk embeddings to form a single embedding for the entire article
+                    embeddings = pool_embeddings(
+                        chunk_embeddings, strategy=pooling_strategy
+                    )
+
+                indices = embeddings_data.query("id == @id").index.values
+
+                for _ in range(len(indices)):
+                    embedding_list.append(embeddings)
+
+                bar()
+
+    for col_name, embedding_list in embedding_dict.items():
+        embedding_col = f"{col_name}_embeddings"
+        embeddings_data[embedding_col] = embedding_list
+
+    return embeddings_data
+
+
+def combine_embeddings_by_weightage(
+    embeddings_data: pd.DataFrame,
+    title_weight: float,
+    article_category_names_weight: float,
+    category_description_weight: float,
+    extracted_content_body_weight: float,
+    keywords_weight: float,
+) -> pd.DataFrame:
+    """
+    Generates weighted embeddings on based on the provided parameters and
+    returns a DataFrame with added 'combined_embeddings' column containing
+    the weighted embeddings.
+
+    Args:
+        embeddings_data (pd.DataFrame): The DataFrame with the generated embeddings.
+        title_weight (float): Weightage of title embeddings to use to compute combined embeddings.
+        article_category_names_weight (float): Weightage of article_category_names embeddings to use to compute combined embeddings.
+        category_description_weight (float): Weightage of category_description embeddings to use to compute combined embeddings.
+        extracted_content_body_weight (float): Weightage of extracted_content_body embeddings to use to compute combined embeddings.
+        keywords_weight (float): Weightage of keywords embeddings to use to compute combined embeddings.
+
+    Returns:
+        pd.DataFrame: The DataFrame with the weighted embeddings.
+    """
+    embeddings_df = embeddings_data.copy()
+
+    embeddings_df["combined_embeddings"] = (
+        embeddings_df["title_embeddings"] * title_weight
+        + embeddings_df["article_category_names_embeddings"]
+        * article_category_names_weight
+        + embeddings_df["category_description_embeddings"] * category_description_weight
+        + embeddings_df["extracted_content_body_embeddings"]
+        * extracted_content_body_weight
+        + embeddings_df["keywords_all-MiniLM-L6-v2_embeddings"] * keywords_weight
+    )
+
+    weighted_embeddings = embeddings_df[
+        [
+            "id",
+            "title",
+            "full_url",
+            "extracted_content_body",
+            "category_description",
+            "keywords_all-MiniLM-L6-v2",
+            "title_embeddings",
+            "article_category_names_embeddings",
+            "category_description_embeddings",
+            "extracted_content_body_embeddings",
+            "keywords_all-MiniLM-L6-v2_embeddings",
+            "combined_embeddings",
+        ]
+    ]
+    return weighted_embeddings

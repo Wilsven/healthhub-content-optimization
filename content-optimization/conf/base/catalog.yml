@@ -77,3 +77,52 @@ filtered_data_with_keywords:
   type: pandas.ParquetDataset
   filepath: data/03_primary/filtered_data_with_keywords.parquet
   versioned: true
+
+embeddings_data:
+  type: pandas.ParquetDataset
+  filepath: data/04_feature/embeddings_data.parquet
+
+weighted_embeddings:
+  type: pickle.PickleDataset
+  filepath: data/04_feature/weighted_embeddings.pkl
+
+ground_truth_data:
+  type: pandas.ExcelDataset
+  filepath: data/01_raw/Synapxe Content Prioritisation - Live Healthy_020724.xlsx
+  load_args:
+    sheet_name: 2
+
+pred_cluster:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/predicted_cluster.csv
+
+metrics:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/metrics.csv
+
+initial_cluster_size:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/initial_cluster_size.csv
+
+final_cluster_size:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/final_cluster_size.csv
+
+updated_pred_cluster:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/final_predicted_clusters.csv
+
+final_clustered_nodes:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/neo_4j_clustered_data.csv
+
+final_unclustered_nodes:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/neo_4j_unclustered_data.csv
+
+clustered_nodes:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/clustered_nodes_first_level.csv
+unclustered_nodes:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/unclustered_nodes_first_level.csv

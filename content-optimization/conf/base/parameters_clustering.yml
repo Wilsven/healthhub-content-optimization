@@ -3,3 +3,23 @@
 #
 # Documentation for this file format can be found in "Parameters"
 # Link: https://docs.kedro.org/en/0.19.6/configuration/parameters.html
+
+neo4j_config:
+  uri: neo4j://localhost:7687
+  database: hh-articles
+
+content_contributor: Health Promotion Board
+
+sim_weightage:
+  weight_title: 0
+  weight_cat: 0
+  weight_desc: 0
+  weight_body: 0
+  weight_combined: 1
+  weight_kws: 0
+
+set_threshold: False #insert "" if not pre-defining threshold
+
+umap_parameters:
+  n_neighbors: 15
+  n_components: 8

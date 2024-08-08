@@ -39,3 +39,48 @@ keywords:
   use_mmr: true
   diversity: 0.5
   top_n: 5
+
+columns_to_keep_emb:
+  - id
+  - content_name
+  - title
+  - article_category_names
+  - cover_image_url
+  - full_url
+  - category_description
+  - content_body
+  - feature_title
+  - pr_name
+  - date_modified
+  - page_views
+  - engagement_rate
+  - content_category
+  - has_table
+  - has_image
+  - related_sections
+  - extracted_links
+  - extracted_headers
+  - extracted_content_body
+  - keywords_all-MiniLM-L6-v2
+
+embeddings:
+  model: nomic-embed-text-v1.5
+  owner: nomic-ai
+  trust_remote_code: true
+  pooling_strategy: mean
+
+# columns to generate embeddings
+columns_to_emb:
+  - title
+  - article_category_names
+  - category_description
+  - extracted_content_body
+  - keywords_all-MiniLM-L6-v2
+
+# weightage of each column embedding
+embeddings_weightage:
+  title: 0.3
+  article_category_names: 0
+  category_description: 0
+  extracted_content_body: 0.7
+  keywords: 0
