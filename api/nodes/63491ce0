@@ -1,0 +1,46 @@
+{
+  "parameters": {
+    "l1_mappings": {
+      "medical-care-and-facilities": {
+        "Support & Tools": [
+          "Body Care",
+          "Pregnancy and Infant Health"
+        ]
+      },
+      "live-healthy-articles": {
+        "Well-being & Lifestyle": [
+          "Exercise and Fitness",
+          "Food and Nutrition",
+          "Body Care",
+          "Mind and Balance",
+          "Child and Teen Health",
+          "Pregnancy and Infant Health",
+          "Sexual Health and Caregiving",
+          "Intoxicates and Addictions",
+          "FIGHT and Travel Health"
+        ],
+        "Highlights & Insights": [
+          "Alerts and Advisories"
+        ],
+        "Well-being & Lifestyle_imputed": [
+          "Conditions and Illnesses"
+        ]
+      },
+      "diseases-and-conditions": {
+        "Health Conditions": [
+          "Conditions and Illnesses",
+          "Child and Teen Health",
+          "Sexual Health and Relationships",
+          "Body Care",
+          "Pregnancy and Infant Health",
+          "Food and Nutrition"
+        ]
+      },
+      "cost-and-financing": {
+        "Support & Tools": [
+          "Conditions and Illnesses"
+        ]
+      }
+    }
+  }
+}

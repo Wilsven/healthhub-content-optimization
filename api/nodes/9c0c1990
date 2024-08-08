@@ -1,0 +1,102 @@
+{
+  "code": "def map_data(\n    all_contents_extracted: dict[str, Callable[[], Any]],\n    l1_mappings: dict[str, dict[str, list[str]]],\n    l2_mappings: dict[str, dict[str, list[str]]],\n) -> dict[str, Callable[[], Any]]:\n    \"\"\"\n    Map extracted content data to L1 and L2 Information Architecture (IA) categories.\n\n    This function processes the extracted content data, applying L1 and L2 IA mappings for each content category.\n    It inverts the provided mappings, iterates through each content category, and applies the mappings\n    to the 'article_category_names' column in the dataframe.\n\n    Args:\n        all_contents_extracted (dict[str, Callable[[], Any]]): A dictionary where keys are\n            content categories and values are functions that return dataframes of extracted content.\n        l1_mappings (dict[str, dict[str, list[str]]]): A dictionary of L1 category mappings.\n            The outer key is the content category, inner key is the target (new) category,\n            and the value is a list of source (old) categories.\n        l2_mappings (dict[str, dict[str, list[str]]]): A dictionary of L2 category mappings,\n            structured similarly to l1_mappings.\n\n    Returns:\n        dict[str, Callable[[], Any]]: A dictionary where keys are content categories and values\n        are functions that return dataframes with mapped L1 and L2 categories. The returned\n        dataframes include new columns for the mapped categories.\n\n    Note:\n        - This function uses the `invert_ia_mappings` and `map_category_names` helper functions.\n    \"\"\"\n    all_contents_mapped = {}\n    inverted_l1_mappings = invert_ia_mappings(l1_mappings)\n    inverted_l2_mappings = invert_ia_mappings(l2_mappings)\n\n    pbar = tqdm(all_contents_extracted.items())\n\n    for content_category, partition_load_func in pbar:\n        pbar.set_description(f\"Mapping: {content_category}\")\n        # Load partition data\n        df = partition_load_func()\n\n        # Map the values from the `article_category_names` column to the new L1 IA mapping\n        mapped_l1_df = map_category_names(\n            inverted_l1_mappings,\n            df,\n            \"content_category\",\n            \"article_category_names\",\n            \"l1_mappings\",\n        )\n\n        # Map the values from the `article_category_names` column to the new L2 IA mapping\n        mapped_df = map_category_names(\n            inverted_l2_mappings,\n            mapped_l1_df,\n            \"content_category\",\n            \"article_category_names\",\n            \"l2_mappings\",\n        )\n\n        all_contents_mapped[content_category] = mapped_df\n\n    return all_contents_mapped\n",
+  "filepath": "content-optimization/src/content_optimization/pipelines/data_processing/nodes.py",
+  "parameters": {
+    "l1_mappings": {
+      "medical-care-and-facilities": {
+        "Support & Tools": [
+          "Body Care",
+          "Pregnancy and Infant Health"
+        ]
+      },
+      "live-healthy-articles": {
+        "Well-being & Lifestyle": [
+          "Exercise and Fitness",
+          "Food and Nutrition",
+          "Body Care",
+          "Mind and Balance",
+          "Child and Teen Health",
+          "Pregnancy and Infant Health",
+          "Sexual Health and Caregiving",
+          "Intoxicates and Addictions",
+          "FIGHT and Travel Health"
+        ],
+        "Highlights & Insights": [
+          "Alerts and Advisories"
+        ],
+        "Well-being & Lifestyle_imputed": [
+          "Conditions and Illnesses"
+        ]
+      },
+      "diseases-and-conditions": {
+        "Health Conditions": [
+          "Conditions and Illnesses",
+          "Child and Teen Health",
+          "Sexual Health and Relationships",
+          "Body Care",
+          "Pregnancy and Infant Health",
+          "Food and Nutrition"
+        ]
+      },
+      "cost-and-financing": {
+        "Support & Tools": [
+          "Conditions and Illnesses"
+        ]
+      }
+    },
+    "l2_mappings": {
+      "medical-care-and-facilities": {
+        "Support and Care Programmes": [
+          "Body Care",
+          "Pregnancy and Infant Health"
+        ]
+      },
+      "live-healthy-articles": {
+        "Exercise and Fitness": [
+          "Exercise and Fitness"
+        ],
+        "Food, Diet and Nutrition": [
+          "Food and Nutrition"
+        ],
+        "Personal Care": [
+          "Body Care"
+        ],
+        "Mental Wellness": [
+          "Mind and Balance"
+        ],
+        "Child and Teen Health": [
+          "Child and Teen Health"
+        ],
+        "Pregnancy and Infant Health": [
+          "Pregnancy and Infant Health"
+        ],
+        "Sexual Health and Caregiving": [
+          "Sexual Health and Caregiving"
+        ],
+        "Substance Addiction": [
+          "Intoxicates and Addictions"
+        ],
+        "Travel Health": [
+          "FIGHT and Travel Health"
+        ],
+        "Health Safety Advisory": [
+          "Alerts and Advisories"
+        ]
+      },
+      "cost-and-financing": {
+        "Cost and Financing": [
+          "Conditions and Illnesses"
+        ]
+      }
+    }
+  },
+  "run_command": "kedro run --to-nodes=map_data_node",
+  "inputs": [
+    "all_contents_extracted",
+    "params:l1_mappings",
+    "params:l2_mappings"
+  ],
+  "outputs": [
+    "all_contents_mapped"
+  ]
+}

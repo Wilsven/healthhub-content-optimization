@@ -1,0 +1,24 @@
+{
+  "code": "def add_data(\n    all_contents_standardized: dict[str, Callable[[], Any]],\n    missing_contents: dict[str, Callable[[], Any]],\n    updated_urls: dict[str, dict[int, str]],\n) -> dict[str, Callable[[], Any]]:\n    \"\"\"\n    Process and add data to standardized content, incorporating missing contents and updated URLs.\n\n    This function performs the following operations:\n    1. Adds missing content from text files to correct Excel errors.\n    2. Adds content body to the dataframe for each content category.\n    3. Updates URLs in the dataframe.\n    4. Flags articles that should be removed before extraction.\n\n    Args:\n        all_contents_standardized (dict[str, Callable[[], Any]]): A dictionary where keys are content\n            categories and values are functions that return dataframes of standardized content.\n        missing_contents (dict[str, Callable[[], Any]]): A dictionary where keys are file paths and\n            values are functions that load the content of text files.\n        updated_urls (dict[str, dict[int, str]]): A dictionary where keys are content categories and\n            values are dictionaries mapping index to updated URLs.\n\n    Returns:\n        dict[str, Callable[[], Any]]: A dictionary where keys are content categories and values are\n        functions that return processed dataframes with added data.\n\n    \"\"\"\n    excel_errors = {}\n    all_contents_added = {}\n\n    # Fetch all txt files from 01_raw to correct the Excel error\n    for file_path, load_func in missing_contents.items():\n        text = load_func()\n        # Extract friendly url that is used as filename\n        friendly_url = file_path.split(\"/\")[-1]\n        # Store in dictionary\n        excel_errors[friendly_url] = text\n\n    pbar = tqdm(all_contents_standardized.items())\n\n    for content_category, partition_load_func in pbar:\n        pbar.set_description(f\"Adding: {content_category}\")\n        df = partition_load_func()\n\n        # Add back contents that are previously indicated as excel errors into the `content_body` column\n        df = add_content_body(df, excel_errors)\n\n        # Add updated urls into the `full_url` column\n        urls_dict = updated_urls.get(content_category, {})\n        df = add_updated_urls(df, urls_dict)\n\n        # Mark articles with no content, was rejected by Excel due to a \"Value\n        # exceeded maximum cell size\" error or with dummy content in `to_remove` column\n        df = flag_articles_to_remove_before_extraction(df)\n\n        all_contents_added[content_category] = df\n\n    return all_contents_added\n",
+  "filepath": "content-optimization/src/content_optimization/pipelines/data_processing/nodes.py",
+  "parameters": {
+    "updated_urls": {
+      "live-healthy-articles": {
+        "1445601": "https://www.healthhub.sg/live-healthy/calcium-for-greater-bone-strength",
+        "1445603": "https://www.healthhub.sg/live-healthy/benefits-of-fruit-and-vegetables",
+        "1445556": "https://www.healthhub.sg/live-healthy/getting-the-fats-right",
+        "1445543": "https://www.healthhub.sg/live-healthy/child-obesity-causes",
+        "1445673": "https://www.healthhub.sg/live-healthy/a-healthy-food-foundation-for-kids-and-teens"
+      }
+    }
+  },
+  "run_command": "kedro run --to-nodes=add_data_node",
+  "inputs": [
+    "all_contents_standardized",
+    "missing_contents",
+    "params:updated_urls"
+  ],
+  "outputs": [
+    "all_contents_added"
+  ]
+}

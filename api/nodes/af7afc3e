@@ -1,0 +1,31 @@
+{
+  "parameters": {
+    "default_columns": [
+      "id",
+      "content_name",
+      "title",
+      "article_category_names",
+      "cover_image_url",
+      "full_url",
+      "full_url2",
+      "friendly_url",
+      "category_description",
+      "content_body",
+      "keywords",
+      "feature_title",
+      "pr_name",
+      "alternate_image_text",
+      "date_modified",
+      "number_of_views",
+      "last_month_view_count",
+      "last_two_months_view",
+      "page_views",
+      "engagement_rate",
+      "bounce_rate",
+      "exit_rate",
+      "scroll_percentage",
+      "percentage_total_views",
+      "cumulative_percentage_total_views"
+    ]
+  }
+}

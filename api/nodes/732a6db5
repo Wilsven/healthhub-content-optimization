@@ -1,0 +1,5 @@
+{
+  "parameters": {
+    "keywords.spacy_pipeline": "en_core_web_sm"
+  }
+}

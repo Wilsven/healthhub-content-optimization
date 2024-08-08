@@ -1,0 +1,13 @@
+{
+  "parameters": {
+    "columns_to_add": {
+      "program-sub-pages": [
+        "ProgramSubPages_ArticleCatNames",
+        "ProgramSubPages_DateModified"
+      ],
+      "programs": [
+        "Programs_DateModified"
+      ]
+    }
+  }
+}

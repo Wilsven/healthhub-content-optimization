@@ -1,0 +1,5 @@
+{
+  "parameters": {
+    "keywords.stop_words": "english"
+  }
+}

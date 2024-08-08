@@ -1,0 +1,49 @@
+{
+  "parameters": {
+    "l2_mappings": {
+      "medical-care-and-facilities": {
+        "Support and Care Programmes": [
+          "Body Care",
+          "Pregnancy and Infant Health"
+        ]
+      },
+      "live-healthy-articles": {
+        "Exercise and Fitness": [
+          "Exercise and Fitness"
+        ],
+        "Food, Diet and Nutrition": [
+          "Food and Nutrition"
+        ],
+        "Personal Care": [
+          "Body Care"
+        ],
+        "Mental Wellness": [
+          "Mind and Balance"
+        ],
+        "Child and Teen Health": [
+          "Child and Teen Health"
+        ],
+        "Pregnancy and Infant Health": [
+          "Pregnancy and Infant Health"
+        ],
+        "Sexual Health and Caregiving": [
+          "Sexual Health and Caregiving"
+        ],
+        "Substance Addiction": [
+          "Intoxicates and Addictions"
+        ],
+        "Travel Health": [
+          "FIGHT and Travel Health"
+        ],
+        "Health Safety Advisory": [
+          "Alerts and Advisories"
+        ]
+      },
+      "cost-and-financing": {
+        "Cost and Financing": [
+          "Conditions and Illnesses"
+        ]
+      }
+    }
+  }
+}

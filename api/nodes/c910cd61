@@ -1,0 +1,5 @@
+{
+  "parameters": {
+    "keywords.model": "all-MiniLM-L6-v2"
+  }
+}

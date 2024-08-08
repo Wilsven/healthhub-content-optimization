@@ -1,0 +1,11 @@
+{
+  "parameters": {
+    "selection_options.only_confirmed": [
+      "cost-and-financing",
+      "diseases-and-conditions",
+      "live-healthy-articles",
+      "medical-care-and-facilities",
+      "support-group-and-others"
+    ]
+  }
+}

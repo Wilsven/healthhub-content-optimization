@@ -1,0 +1,9 @@
+{
+  "parameters": {
+    "cfg": {
+      "option": "only_confirmed",
+      "contributor": "Health Promotion Board",
+      "to_remove": true
+    }
+  }
+}

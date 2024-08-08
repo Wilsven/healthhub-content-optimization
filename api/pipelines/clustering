@@ -1,0 +1,34 @@
+{
+  "nodes": [],
+  "edges": [],
+  "layers": [],
+  "tags": [],
+  "pipelines": [
+    {
+      "id": "__default__",
+      "name": "__default__"
+    },
+    {
+      "id": "clustering",
+      "name": "clustering"
+    },
+    {
+      "id": "data_processing",
+      "name": "data_processing"
+    },
+    {
+      "id": "feature_engineering",
+      "name": "feature_engineering"
+    }
+  ],
+  "modular_pipelines": {
+    "__root__": {
+      "id": "__root__",
+      "name": "__root__",
+      "inputs": [],
+      "outputs": [],
+      "children": []
+    }
+  },
+  "selected_pipeline": "clustering"
+}

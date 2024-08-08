@@ -1,0 +1,8 @@
+{
+  "type": "pandas.parquet_dataset.ParquetDataset",
+  "filepath": "/home/runner/work/healthhub-content-optimization/healthhub-content-optimization/content-optimization/data/03_primary/filtered_data_with_keywords.parquet",
+  "run_command": "kedro run --to-outputs=filtered_data_with_keywords",
+  "preview": null,
+  "preview_type": null,
+  "stats": null
+}

@@ -1,0 +1,59 @@
+{
+  "code": "def extract_data(\n    all_contents_added: dict[str, Callable[[], Any]],\n    word_count_cutoff: int,\n    whitelist: list[int],\n    blacklist: dict[int, str],\n) -> tuple[dict[str, pd.DataFrame], dict[str, str]]:\n    \"\"\"\n    Extracts data from processed content and stores it in parquet files\n    and text files.\n\n    Args:\n        all_contents_added (dict[str, Callable[[], Any]]):\n            A dictionary containing the standardized `partitions.PartitionedDataset` where the keys are the content\n            categories and the values loads the standardized parquet data as `pandas.DataFrame`.\n        word_count_cutoff (int): The minimum number of words in an article to be considered before flagging for removal.\n        whitelist (list[int]): The list of article IDs to keep. See https://bitly.cx/IlwNV.\n        blacklist (dict[int, str]): The list of article IDs to remove. See https://bitly.cx/f8FIk.\n\n    Returns:\n        tuple[dict[str, pd.DataFrame], dict[str, str]]: A tuple containing two dictionaries. The first dictionary\n            contains the extracted data stored as partitioned parquet files, where the keys are the content categories\n            and the values are the corresponding dataframes.\n            The second dictionary contains the extracted text stored as partitioned text files, where the keys are the\n            file paths and the values are the extracted text.\n    \"\"\"\n    all_contents_extracted = {}  # to store as partitioned parquet files\n    all_extracted_text = {}  # to store as partitioned text files\n\n    pbar = tqdm(all_contents_added.items())\n\n    for content_category, partition_load_func in pbar:\n        pbar.set_description(f\"Extracting: {content_category}\")\n        # Load partition data\n        df = partition_load_func()\n\n        # Initialise new columns in dataframe to store extracted data\n        df[\"has_table\"] = False\n        df[\"has_image\"] = False\n        df[\"related_sections\"] = None\n        df[\"extracted_tables\"] = None\n        df[\"extracted_raw_html_tables\"] = None\n        df[\"extracted_links\"] = None\n        df[\"extracted_headers\"] = None\n        df[\"extracted_images\"] = None\n        df[\"extracted_content_body\"] = None\n\n        for index, row in df.iterrows():\n            # Skip extraction for those articles flagged for removal unless whitelisted\n            if row[\"to_remove\"]:\n                # Check if the article is in the whitelist\n                if row[\"id\"] not in whitelist:\n                    continue\n                else:\n                    # Whitelist article\n                    df.at[index, \"to_remove\"] = False\n\n            # Replace all forward slashes with hyphens to avoid saving as folders\n            title = re.sub(r\"\\/\", \"-\", row[\"title\"]).strip()\n\n            # Get the HTML content for extraction and relevant data for logging\n            content_name = row[\"content_name\"]\n            full_url = row[\"full_url\"]\n            html_content = row[\"content_body\"]\n\n            # Extract text from HTML using the HTMLExtractor Class\n            extractor = HTMLExtractor(\n                content_name, content_category, full_url, html_content\n            )\n            has_table = extractor.check_for_table()\n            has_image = extractor.check_for_image()\n            related_sections = extractor.extract_related_sections()\n            extracted_tables = extractor.extract_tables()\n            extracted_raw_html_tables = extractor.extract_raw_html_tables()\n            extracted_links = extractor.extract_links()\n            extracted_headers = extractor.extract_headers()\n            extracted_img_alt_text = extractor.extract_img_links_and_alt_text()\n            extracted_content_body = extractor.extract_text()\n\n            # Store extracted data into the dataframe\n            df.at[index, \"has_table\"] = has_table\n            df.at[index, \"has_image\"] = has_image\n            df.at[index, \"related_sections\"] = related_sections\n            df.at[index, \"extracted_tables\"] = extracted_tables\n            df.at[index, \"extracted_raw_html_tables\"] = extracted_raw_html_tables\n            df.at[index, \"extracted_links\"] = extracted_links\n            df.at[index, \"extracted_headers\"] = extracted_headers\n            df.at[index, \"extracted_images\"] = extracted_img_alt_text\n            df.at[index, \"extracted_content_body\"] = extracted_content_body\n\n            # Substitute forbidden characters for filenames with _\n            title = re.sub(r'[<>:\"/\\\\|?*]', \"_\", title)\n\n            # Truncate title to 25 characters and append the id\n            # See: https://github.com/Wilsven/healthhub-content-optimization/issues/42\n            title = title[:25] + f\"_{row['id']}\"\n\n            # Store text files in its own folder named `content_category`\n            all_extracted_text[os.path.join(content_category, title)] = (\n                extracted_content_body\n            )\n\n        # After extraction, we flag to remove articles with no content,\n        # duplicated content, duplicated URL or below word count cutoff\n        df = flag_articles_to_remove_after_extraction(\n            df, word_count_cutoff, whitelist, blacklist\n        )\n\n        # Store dataframes in a parquet file named `content_category`\n        all_contents_extracted[content_category] = df\n\n    return all_contents_extracted, all_extracted_text\n",
+  "filepath": "content-optimization/src/content_optimization/pipelines/data_processing/nodes.py",
+  "parameters": {
+    "word_count_cutoff": 90,
+    "whitelist": [
+      1445216,
+      1444496,
+      1446090,
+      1442907,
+      1443325,
+      1445019,
+      1442928,
+      1445021,
+      1444996,
+      1442952,
+      1445017,
+      1445212,
+      1445958,
+      1444997,
+      1445027,
+      1445024,
+      1445002,
+      1444991,
+      1445000,
+      1445733,
+      1445704,
+      1445707,
+      1497409,
+      1469472,
+      1446081,
+      1445828,
+      1445798,
+      1435335,
+      1435183,
+      1434614
+    ],
+    "blacklist": {
+      "1443526": "Table of Contents",
+      "1443534": "Table of Contents",
+      "1444997": "Irrelevant Content",
+      "1445002": "Irrelevant Content",
+      "1444991": "Irrelevant Content",
+      "1444996": "Irrelevant Content",
+      "1445000": "Irrelevant Content"
+    }
+  },
+  "run_command": "kedro run --to-nodes=extract_data_node",
+  "inputs": [
+    "all_contents_added",
+    "params:word_count_cutoff",
+    "params:whitelist",
+    "params:blacklist"
+  ],
+  "outputs": [
+    "all_contents_extracted",
+    "all_extracted_text"
+  ]
+}

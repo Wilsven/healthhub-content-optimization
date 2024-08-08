@@ -1,0 +1,53 @@
+{
+  "code": "def extract_keywords(\n    merged_data: pd.DataFrame,\n    cfg: dict[str, Any],\n    only_confirmed_option: list[str],\n    all_option: list[str],\n    model: str,\n    spacy_pipeline: str,\n    stop_words: str,\n    workers: int,\n    use_mmr: bool,\n    diversity: float,\n    top_n: int,\n) -> pd.DataFrame:\n    \"\"\"\n    Extract keywords using KeyBERT model based on the provided parameters and\n    return the DataFrame with the added `keybert_keywords` column containing the keywords.\n\n    Args:\n        merged_data (pd.DataFrame): The DataFrame containing the merged data.\n        cfg (dict[str, Any]): The configuration dictionary containing the options to subset the merged data.\n        only_confirmed_option (list[str]): The list of confirmed content categories if option is `only_confirmed`.\n        all_option (list[str]): The list of all content categories if option is `all`.\n        model (str): Use a custom embedding model. See https://maartengr.github.io/KeyBERT/guides/embeddings.html\n        spacy_pipeline (str): The spaCy pipeline to be used for part-of-speech tagging. Standard is the 'en' pipeline.\n        stop_words (str): The stop words to be used for keyphrase extraction.\n        workers (int): Number of workers for spaCy part-of-speech tagging. To use all workers, set it to -1.\n        use_mmr (bool): Whether to use Maximal Marginal Relevance (MMR) for keyphrase extraction.\n        diversity (float): The diversity parameter for keyphrase extraction.\n        top_n (int): The number of top keywords to extract.\n\n    Returns:\n         pd.DataFrame: The dataframe with the extracted keywords.\n    \"\"\"\n    option = cfg[\"option\"]\n    contributor = cfg[\"contributor\"]  # TODO: To allow for options other than HPB\n    to_remove = cfg[\"to_remove\"]\n\n    # Subset the merged data based on the content categories provided as option\n    if option == \"only_confirmed\":\n        assert set(only_confirmed_option).issubset(\n            set(all_option)\n        ), \"Invalid option(s). Please ensure selected content categories exist.\"\n        filtered_data = merged_data.query(\"content_category in @only_confirmed_option\")\n    elif option == \"all\":\n        filtered_data = merged_data.copy()\n    else:\n        assert (\n            option in all_option\n        ), \"Invalid option. Please ensure selected content category exists.\"\n        filtered_data = merged_data.query(\"content_category == @option\")\n\n    # To remove flagged articles or not and to subset by contributor\n    if to_remove:\n        filtered_data = filtered_data.query(\n            f\"pr_name == '{contributor}' and to_remove == {not to_remove}\"\n        ).reset_index(drop=True)\n    else:\n        filtered_data = filtered_data.query(f\"pr_name == '{contributor}'\").reset_index(\n            drop=True\n        )\n\n    # Extract the raw content body text\n    docs = filtered_data[\"extracted_content_body\"].to_list()\n\n    kw_model = KeyBERT(model)\n    vectorizer = KeyphraseTfidfVectorizer(\n        spacy_pipeline, stop_words=stop_words, workers=workers\n    )\n\n    # Marginally more performant\n    # See: https://github.com/MaartenGr/KeyBERT/issues/156\n    with TicToc():\n        counts = vectorizer.fit(docs)\n        vectorizer.fit = lambda *args, **kwargs: counts\n\n        # If keyphrase vectorizer is specified, `keyphrase_ngram_range` is ignored\n        keywords = kw_model.extract_keywords(\n            docs,\n            use_mmr=use_mmr,\n            diversity=diversity,\n            top_n=top_n,\n            vectorizer=vectorizer,\n        )\n\n    # We iterate through the keywords, and reverse the order of the keywords\n    # from the closest to the most distant and taking only the keywords themselves,\n    # ignoring the distances\n    keywords = [[kw[0] for kw in kws[::-1]] for kws in keywords]\n    # Store keywords in new column\n    filtered_data_with_keywords = filtered_data.copy()\n    filtered_data_with_keywords[f\"keywords_{model}\"] = keywords\n\n    return filtered_data_with_keywords\n",
+  "filepath": "content-optimization/src/content_optimization/pipelines/feature_engineering/nodes.py",
+  "parameters": {
+    "cfg": {
+      "option": "only_confirmed",
+      "contributor": "Health Promotion Board",
+      "to_remove": true
+    },
+    "selection_options.only_confirmed": [
+      "cost-and-financing",
+      "diseases-and-conditions",
+      "live-healthy-articles",
+      "medical-care-and-facilities",
+      "support-group-and-others"
+    ],
+    "selection_options.all": [
+      "cost-and-financing",
+      "diseases-and-conditions",
+      "health-statistics",
+      "live-healthy-articles",
+      "medical-care-and-facilities",
+      "medications",
+      "program-sub-pages",
+      "programs",
+      "support-group-and-others"
+    ],
+    "keywords.model": "all-MiniLM-L6-v2",
+    "keywords.spacy_pipeline": "en_core_web_sm",
+    "keywords.stop_words": "english",
+    "keywords.workers": 1,
+    "keywords.use_mmr": true,
+    "keywords.diversity": 0.5,
+    "keywords.top_n": 5
+  },
+  "run_command": "kedro run --to-nodes=extract_keywords_node",
+  "inputs": [
+    "merged_data",
+    "params:cfg",
+    "params:selection_options.only_confirmed",
+    "params:selection_options.all",
+    "params:keywords.model",
+    "params:keywords.spacy_pipeline",
+    "params:keywords.stop_words",
+    "params:keywords.workers",
+    "params:keywords.use_mmr",
+    "params:keywords.diversity",
+    "params:keywords.top_n"
+  ],
+  "outputs": [
+    "filtered_data_with_keywords"
+  ]
+}

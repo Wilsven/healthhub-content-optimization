@@ -1,0 +1,389 @@
+{
+  "nodes": [
+    {
+      "id": "aac5126e",
+      "name": "merged_data",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing",
+        "feature_engineering"
+      ],
+      "type": "data",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": "pandas.parquet_dataset.ParquetDataset",
+      "stats": null
+    },
+    {
+      "id": "141cb033",
+      "name": "extract_keywords_node",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "feature_engineering"
+      ],
+      "type": "task",
+      "modular_pipelines": null,
+      "parameters": {
+        "cfg": {
+          "option": "only_confirmed",
+          "contributor": "Health Promotion Board",
+          "to_remove": true
+        },
+        "selection_options.only_confirmed": [
+          "cost-and-financing",
+          "diseases-and-conditions",
+          "live-healthy-articles",
+          "medical-care-and-facilities",
+          "support-group-and-others"
+        ],
+        "selection_options.all": [
+          "cost-and-financing",
+          "diseases-and-conditions",
+          "health-statistics",
+          "live-healthy-articles",
+          "medical-care-and-facilities",
+          "medications",
+          "program-sub-pages",
+          "programs",
+          "support-group-and-others"
+        ],
+        "keywords.model": "all-MiniLM-L6-v2",
+        "keywords.spacy_pipeline": "en_core_web_sm",
+        "keywords.stop_words": "english",
+        "keywords.workers": 1,
+        "keywords.use_mmr": true,
+        "keywords.diversity": 0.5,
+        "keywords.top_n": 5
+      }
+    },
+    {
+      "id": "a41afe5e",
+      "name": "params:cfg",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "feature_engineering"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "9fcbd6df",
+      "name": "params:selection_options.only_confirmed",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "feature_engineering"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "b8494b25",
+      "name": "params:selection_options.all",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "feature_engineering"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "c910cd61",
+      "name": "params:keywords.model",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "feature_engineering"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "732a6db5",
+      "name": "params:keywords.spacy_pipeline",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "feature_engineering"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "61860242",
+      "name": "params:keywords.stop_words",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "feature_engineering"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "04f6bbee",
+      "name": "params:keywords.workers",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "feature_engineering"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "7cedbc47",
+      "name": "params:keywords.use_mmr",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "feature_engineering"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "d7052aff",
+      "name": "params:keywords.diversity",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "feature_engineering"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "151f120f",
+      "name": "params:keywords.top_n",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "feature_engineering"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "9a3f3206",
+      "name": "filtered_data_with_keywords",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "feature_engineering"
+      ],
+      "type": "data",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": "pandas.parquet_dataset.ParquetDataset",
+      "stats": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "aac5126e",
+      "target": "141cb033"
+    },
+    {
+      "source": "141cb033",
+      "target": "9a3f3206"
+    },
+    {
+      "source": "151f120f",
+      "target": "141cb033"
+    },
+    {
+      "source": "9fcbd6df",
+      "target": "141cb033"
+    },
+    {
+      "source": "7cedbc47",
+      "target": "141cb033"
+    },
+    {
+      "source": "c910cd61",
+      "target": "141cb033"
+    },
+    {
+      "source": "d7052aff",
+      "target": "141cb033"
+    },
+    {
+      "source": "732a6db5",
+      "target": "141cb033"
+    },
+    {
+      "source": "61860242",
+      "target": "141cb033"
+    },
+    {
+      "source": "04f6bbee",
+      "target": "141cb033"
+    },
+    {
+      "source": "a41afe5e",
+      "target": "141cb033"
+    },
+    {
+      "source": "b8494b25",
+      "target": "141cb033"
+    }
+  ],
+  "layers": [],
+  "tags": [],
+  "pipelines": [
+    {
+      "id": "__default__",
+      "name": "__default__"
+    },
+    {
+      "id": "clustering",
+      "name": "clustering"
+    },
+    {
+      "id": "data_processing",
+      "name": "data_processing"
+    },
+    {
+      "id": "feature_engineering",
+      "name": "feature_engineering"
+    }
+  ],
+  "modular_pipelines": {
+    "__root__": {
+      "id": "__root__",
+      "name": "__root__",
+      "inputs": [],
+      "outputs": [],
+      "children": [
+        {
+          "id": "a41afe5e",
+          "type": "parameters"
+        },
+        {
+          "id": "9fcbd6df",
+          "type": "parameters"
+        },
+        {
+          "id": "a41afe5e",
+          "type": "data"
+        },
+        {
+          "id": "aac5126e",
+          "type": "data"
+        },
+        {
+          "id": "9fcbd6df",
+          "type": "data"
+        },
+        {
+          "id": "b8494b25",
+          "type": "parameters"
+        },
+        {
+          "id": "d7052aff",
+          "type": "parameters"
+        },
+        {
+          "id": "d7052aff",
+          "type": "data"
+        },
+        {
+          "id": "b8494b25",
+          "type": "data"
+        },
+        {
+          "id": "c910cd61",
+          "type": "parameters"
+        },
+        {
+          "id": "61860242",
+          "type": "parameters"
+        },
+        {
+          "id": "c910cd61",
+          "type": "data"
+        },
+        {
+          "id": "61860242",
+          "type": "data"
+        },
+        {
+          "id": "7cedbc47",
+          "type": "parameters"
+        },
+        {
+          "id": "9a3f3206",
+          "type": "data"
+        },
+        {
+          "id": "04f6bbee",
+          "type": "parameters"
+        },
+        {
+          "id": "732a6db5",
+          "type": "parameters"
+        },
+        {
+          "id": "7cedbc47",
+          "type": "data"
+        },
+        {
+          "id": "151f120f",
+          "type": "parameters"
+        },
+        {
+          "id": "04f6bbee",
+          "type": "data"
+        },
+        {
+          "id": "732a6db5",
+          "type": "data"
+        },
+        {
+          "id": "151f120f",
+          "type": "data"
+        },
+        {
+          "id": "141cb033",
+          "type": "task"
+        }
+      ]
+    }
+  },
+  "selected_pipeline": "feature_engineering"
+}

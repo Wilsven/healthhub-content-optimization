@@ -1,0 +1,15 @@
+{
+  "parameters": {
+    "selection_options.all": [
+      "cost-and-financing",
+      "diseases-and-conditions",
+      "health-statistics",
+      "live-healthy-articles",
+      "medical-care-and-facilities",
+      "medications",
+      "program-sub-pages",
+      "programs",
+      "support-group-and-others"
+    ]
+  }
+}

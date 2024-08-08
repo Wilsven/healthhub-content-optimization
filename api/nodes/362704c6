@@ -1,0 +1,12 @@
+{
+  "code": "def merge_data(all_contents_mapped: dict[str, Callable[[], Any]]) -> pd.DataFrame:\n    \"\"\"\n    Merge the data from multiple partitioned dataframes into a single `pandas.DataFrame`.\n\n    Parameters:\n        all_contents_mapped (dict[str, Callable[[], Any]]):\n            A dictionary containing the `partitions.PartitionedDataset`\n            where the values load the parquet data as `pandas.DataFrame`.\n\n    Returns:\n        pd.DataFrame: The merged dataframe.\n    \"\"\"\n    merged_df = pd.DataFrame()\n    for _, partition_load_func in all_contents_mapped.items():\n        # Load partition data\n        df = partition_load_func()\n        merged_df = pd.concat([merged_df, df], axis=0, ignore_index=True)\n\n    return merged_df\n",
+  "filepath": "content-optimization/src/content_optimization/pipelines/data_processing/nodes.py",
+  "parameters": {},
+  "run_command": "kedro run --to-nodes=merge_data_node",
+  "inputs": [
+    "all_contents_mapped"
+  ],
+  "outputs": [
+    "merged_data"
+  ]
+}

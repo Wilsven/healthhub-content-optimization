@@ -1,0 +1,967 @@
+{
+  "nodes": [
+    {
+      "id": "3513c6bf",
+      "name": "standardize_columns_node",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "task",
+      "modular_pipelines": null,
+      "parameters": {
+        "columns_to_add": {
+          "program-sub-pages": [
+            "ProgramSubPages_ArticleCatNames",
+            "ProgramSubPages_DateModified"
+          ],
+          "programs": [
+            "Programs_DateModified"
+          ]
+        },
+        "columns_to_keep": {
+          "cost-and-financing": [
+            "id",
+            "Content.Name",
+            "CostAndFinancing_Title",
+            "CostAndFinancing_ArticleCatNames",
+            "CostAndFinancing_CoverImgUrl",
+            "CostAndFinancing_FullUrl",
+            "CostAndFinancing_FullUrl2",
+            "CostAndFinancing_FriendlyUrl",
+            "CostAndFinancing_CategoryDesc",
+            "CostAndFinancing_ContentBody",
+            "CostAndFinancing_ENKeywords",
+            "CostAndFinancing_FeatureTitle",
+            "CostAndFinancing_PRName",
+            "CostAndFinancing_AlternateImageText",
+            "CostAndFinancing_DateModified",
+            "CostAndFinancing_NumberofViews",
+            "CostAndFinancing_LastMonthViewCount",
+            "CostAndFinancing_LastTwoMonthsView",
+            "Page Views",
+            "Engagement Rate",
+            "Bounce Rate",
+            "Exit Rate",
+            "Scroll %",
+            "% of Total Views",
+            "Cumulative % of Total Views"
+          ],
+          "diseases-and-conditions": [
+            "id",
+            "Content.Name",
+            "DiseasesCondition_Title",
+            "DiseasesCondition_ArticleCatNames",
+            "DiseasesCondition_CoverImgUrl",
+            "DiseasesCondition_FullUrl",
+            "DiseasesCondition_FullUrl2",
+            "DiseasesCondition_FriendlyUrl",
+            "DiseasesCondition_CategoryDesc",
+            "DiseasesCondition_ContentBody",
+            "DiseasesCondition_ENKeywords",
+            "DiseasesCondition_FeatureTitle",
+            "DiseasesCondition_PRName",
+            "DiseasesCondition_AlternateImageText",
+            "DiseasesCondition_DateModified",
+            "DiseasesCondition_NumberOfViews",
+            "DiseasesCondition_LastMonthViewCount",
+            "DiseasesCondition_LastTwoMonthsView",
+            "Page Views",
+            "Engagement Rate",
+            "Bounce Rate",
+            "Exit Rate",
+            "Scroll %",
+            "% of Total Views",
+            "Cumulative % of Total Views"
+          ],
+          "health-statistics": [
+            "id",
+            "Content.Name",
+            "HealthStatistics_Title",
+            "HealthStatistics_ArticleCatNames",
+            "HealthStatistics_CoverImgUrl",
+            "HealthStatistics_FullUrl",
+            "HealthStatistics_FullUrl2",
+            "HealthStatistics_FriendlyUrl",
+            "HealthStatistics_CategoryDesc",
+            "HealthStatistics_ContentBody",
+            "HealthStatistics_ENKeywords",
+            "HealthStatistics_FeatureTitle",
+            "HealthStatistics_PRName",
+            "HealthStatistics_AlternateImageText",
+            "HealthStatistics_DateModified",
+            "HealthStatistics_NumberOfViews",
+            "HealthStatistics_LastMonthViewCount",
+            "HealthStatistics_LastTwoMonthsView",
+            "Page Views",
+            "Engagement Rate",
+            "Bounce Rate",
+            "Exit Rate",
+            "Scroll %",
+            "% of Total Views",
+            "Cumulative % of Total Views"
+          ],
+          "live-healthy-articles": [
+            "id",
+            "Content.Name",
+            "LiveHealthyArticle_Title",
+            "LiveHealthyArticle_ArticleCateName",
+            "LiveHealthyArticle_CoverImgUrl",
+            "LiveHealthyArticle_FullUrl",
+            "LiveHealthyArticle_FullUrl2",
+            "LiveHealthyArticle_FriendlyUrl",
+            "LiveHealthyArticle_CategoryDes",
+            "LiveHealthyArticle_Content_Body",
+            "LiveHealthyArticle_ENKeywords",
+            "LiveHealthyArticle_FeatureTitle",
+            "LiveHealthyArticle_PRName",
+            "LiveHealthyArticle_AlternateImageText",
+            "LiveHealthyArticle_DateModified",
+            "LiveHealthyArticle_Number_of_View",
+            "LiveHealthyArticle_Lastmonthview",
+            "LiveHealthyArticle_LastTwoMonthsView",
+            "Page Views",
+            "Engagement Rate",
+            "Bounce Rate",
+            "Exit Rate",
+            "Scroll %",
+            "% of Total Views",
+            "Cumulative % of Total Views"
+          ],
+          "medical-care-and-facilities": [
+            "id",
+            "Content.Name",
+            "MedicalCareFaci_Title",
+            "MedicalCareFaci_ArticleCatNames",
+            "MedicalCareFaci_CoverImgUrl",
+            "MedicalCareFaci_FullUrl",
+            "MedicalCareFaci_FullUrl2",
+            "MedicalCareFaci_FriendlyUrl",
+            "MedicalCareFaci_CategoryDesc",
+            "MedicalCareFaci_ContentBody",
+            "MedicalCareFaci_ENKeywords",
+            "MedicalCareFaci_FeatureTitle",
+            "MedicalCareFaci_PRName",
+            "MedicalCareFaci_AlternateImageText",
+            "MedicalCareFaci_DateModified",
+            "MedicalCareFaci_NumberOfViews",
+            "MedicalCareFaci_LastMonthViewCount",
+            "MedicalCareFaci_LastTwoMonthsView",
+            "Page Views",
+            "Engagement Rate",
+            "Bounce Rate",
+            "Exit Rate",
+            "Scroll %",
+            "% of Total Views",
+            "Cumulative % of Total Views"
+          ],
+          "medications": [
+            "id",
+            "Content.Name",
+            "Medication_Title",
+            "Medication_ArticleCatNames",
+            "Medication_CoverImgUrl",
+            "Medication_FullUrl",
+            "Medication_FullUrl2",
+            "Medication_FriendlyUrl",
+            "Medication_CategoryDesc",
+            "Medication_ContentBody",
+            "Medication_ENKeywords",
+            "Medication_FeatureTitle",
+            "Medication_PRName",
+            "Medication_AlternateImageText",
+            "Medication_DateModified",
+            "Medication_NumberOfViews",
+            "Medication_LastMonthViewCount",
+            "Medication_LastTwoMonthsView",
+            "Page Views",
+            "Engagement Rate",
+            "Bounce Rate",
+            "Exit Rate",
+            "Scroll %",
+            "% of Total Views",
+            "Cumulative % of Total Views"
+          ],
+          "program-sub-pages": [
+            "id",
+            "Content.Name",
+            "ProgramSubPages_Title",
+            "ProgramSubPages_ArticleCatNames",
+            "ProgramSubPages_CoverImgUrl",
+            "ProgramSubPages_FullUrl",
+            "ProgramSubPages_FullUrl2",
+            "ProgramSubPages_FriendlyUrl",
+            "ProgramSubPages_CategoryDes",
+            "ProgramSubPages_Content_Body",
+            "ProgramSubPages_ENKeywords",
+            "ProgramSubPages_FeatureTitle",
+            "ProgramSubPages_PRName",
+            "ProgramSubPages_AlternateImageText",
+            "ProgramSubPages_DateModified",
+            "ProgramSubPages_Number_of_Views",
+            "ProgramSubPages_Lastmonthviewcount",
+            "ProgramSubPages_LastTwoMonthCount",
+            "Page Views",
+            "Engagement Rate",
+            "Bounce Rate",
+            "Exit Rate",
+            "Scroll %",
+            "% of Total Views",
+            "Cumulative % of Total Views"
+          ],
+          "programs": [
+            "id",
+            "Content.Name",
+            "Programs_Title",
+            "Programs_ArticleCateNames",
+            "Programs_CoverImgUrl",
+            "Programs_FullUrl",
+            "Programs_FullUrl2",
+            "Programs_FriendlyUrl",
+            "Programs_CategoryDes",
+            "Programs_Content_x0020_Body",
+            "Programs_ENKeywords",
+            "Programs_FeatureTitle",
+            "Programs_PRName",
+            "Programs_AlternateImageText",
+            "Programs_DateModified",
+            "Programs_Number_of_Views",
+            "Programs_Lastmonthviewcount",
+            "Programs_LastTwoMonthsView",
+            "Page Views",
+            "Engagement Rate",
+            "Bounce Rate",
+            "Exit Rate",
+            "Scroll %",
+            "% of Total Views",
+            "Cumulative % of Total Views"
+          ],
+          "support-group-and-others": [
+            "id",
+            "Content.Name",
+            "SupportGroups_Title",
+            "SupportGroups_ArticleCatNames",
+            "SupportGroups_CoverImgUrl",
+            "SupportGroups_FullUrl",
+            "SupportGroups_FullUrl2",
+            "SupportGroups_FriendlyUrl",
+            "SupportGroups_CategoryDesc",
+            "SupportGroups_ContentBody",
+            "SupportGroups_ENKeywords",
+            "SupportGroups_FeatureTitle",
+            "SupportGroups_PRName",
+            "SupportGroups_AlternateImageText",
+            "SupportGroups_DateModified",
+            "SupportGroups_NumberOfViews",
+            "SupportGroups_LastMonthViewCount",
+            "SupportGroups_LastTwoMonthsView",
+            "Page Views",
+            "Engagement Rate",
+            "Bounce Rate",
+            "Exit Rate",
+            "Scroll %",
+            "% of Total Views",
+            "Cumulative % of Total Views"
+          ]
+        },
+        "default_columns": [
+          "id",
+          "content_name",
+          "title",
+          "article_category_names",
+          "cover_image_url",
+          "full_url",
+          "full_url2",
+          "friendly_url",
+          "category_description",
+          "content_body",
+          "keywords",
+          "feature_title",
+          "pr_name",
+          "alternate_image_text",
+          "date_modified",
+          "number_of_views",
+          "last_month_view_count",
+          "last_two_months_view",
+          "page_views",
+          "engagement_rate",
+          "bounce_rate",
+          "exit_rate",
+          "scroll_percentage",
+          "percentage_total_views",
+          "cumulative_percentage_total_views"
+        ]
+      }
+    },
+    {
+      "id": "1067bc4a",
+      "name": "all_contents",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "data",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": "partitions.partitioned_dataset.PartitionedDataset",
+      "stats": null
+    },
+    {
+      "id": "8a8953d3",
+      "name": "params:columns_to_add",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "81090966",
+      "name": "params:columns_to_keep",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "af7afc3e",
+      "name": "params:default_columns",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "b9e757c4",
+      "name": "all_contents_standardized",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "data",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": "partitions.partitioned_dataset.PartitionedDataset",
+      "stats": null
+    },
+    {
+      "id": "f6d77ba2",
+      "name": "add_data_node",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "task",
+      "modular_pipelines": null,
+      "parameters": {
+        "updated_urls": {
+          "live-healthy-articles": {
+            "1445601": "https://www.healthhub.sg/live-healthy/calcium-for-greater-bone-strength",
+            "1445603": "https://www.healthhub.sg/live-healthy/benefits-of-fruit-and-vegetables",
+            "1445556": "https://www.healthhub.sg/live-healthy/getting-the-fats-right",
+            "1445543": "https://www.healthhub.sg/live-healthy/child-obesity-causes",
+            "1445673": "https://www.healthhub.sg/live-healthy/a-healthy-food-foundation-for-kids-and-teens"
+          }
+        }
+      }
+    },
+    {
+      "id": "a0ca961d",
+      "name": "missing_contents",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "data",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": "partitions.partitioned_dataset.PartitionedDataset",
+      "stats": null
+    },
+    {
+      "id": "c39699fc",
+      "name": "params:updated_urls",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "91882ca7",
+      "name": "all_contents_added",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "data",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": "partitions.partitioned_dataset.PartitionedDataset",
+      "stats": null
+    },
+    {
+      "id": "7b621a30",
+      "name": "extract_data_node",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "task",
+      "modular_pipelines": null,
+      "parameters": {
+        "word_count_cutoff": 90,
+        "whitelist": [
+          1445216,
+          1444496,
+          1446090,
+          1442907,
+          1443325,
+          1445019,
+          1442928,
+          1445021,
+          1444996,
+          1442952,
+          1445017,
+          1445212,
+          1445958,
+          1444997,
+          1445027,
+          1445024,
+          1445002,
+          1444991,
+          1445000,
+          1445733,
+          1445704,
+          1445707,
+          1497409,
+          1469472,
+          1446081,
+          1445828,
+          1445798,
+          1435335,
+          1435183,
+          1434614
+        ],
+        "blacklist": {
+          "1443526": "Table of Contents",
+          "1443534": "Table of Contents",
+          "1444997": "Irrelevant Content",
+          "1445002": "Irrelevant Content",
+          "1444991": "Irrelevant Content",
+          "1444996": "Irrelevant Content",
+          "1445000": "Irrelevant Content"
+        }
+      }
+    },
+    {
+      "id": "cc87abde",
+      "name": "params:word_count_cutoff",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "6321ab1d",
+      "name": "params:whitelist",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "e0cbc2bc",
+      "name": "params:blacklist",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "586ac0f0",
+      "name": "all_contents_extracted",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "data",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": "partitions.partitioned_dataset.PartitionedDataset",
+      "stats": null
+    },
+    {
+      "id": "9c6ef664",
+      "name": "all_extracted_text",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "data",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": "partitions.partitioned_dataset.PartitionedDataset",
+      "stats": null
+    },
+    {
+      "id": "9c0c1990",
+      "name": "map_data_node",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "task",
+      "modular_pipelines": null,
+      "parameters": {
+        "l1_mappings": {
+          "medical-care-and-facilities": {
+            "Support & Tools": [
+              "Body Care",
+              "Pregnancy and Infant Health"
+            ]
+          },
+          "live-healthy-articles": {
+            "Well-being & Lifestyle": [
+              "Exercise and Fitness",
+              "Food and Nutrition",
+              "Body Care",
+              "Mind and Balance",
+              "Child and Teen Health",
+              "Pregnancy and Infant Health",
+              "Sexual Health and Caregiving",
+              "Intoxicates and Addictions",
+              "FIGHT and Travel Health"
+            ],
+            "Highlights & Insights": [
+              "Alerts and Advisories"
+            ],
+            "Well-being & Lifestyle_imputed": [
+              "Conditions and Illnesses"
+            ]
+          },
+          "diseases-and-conditions": {
+            "Health Conditions": [
+              "Conditions and Illnesses",
+              "Child and Teen Health",
+              "Sexual Health and Relationships",
+              "Body Care",
+              "Pregnancy and Infant Health",
+              "Food and Nutrition"
+            ]
+          },
+          "cost-and-financing": {
+            "Support & Tools": [
+              "Conditions and Illnesses"
+            ]
+          }
+        },
+        "l2_mappings": {
+          "medical-care-and-facilities": {
+            "Support and Care Programmes": [
+              "Body Care",
+              "Pregnancy and Infant Health"
+            ]
+          },
+          "live-healthy-articles": {
+            "Exercise and Fitness": [
+              "Exercise and Fitness"
+            ],
+            "Food, Diet and Nutrition": [
+              "Food and Nutrition"
+            ],
+            "Personal Care": [
+              "Body Care"
+            ],
+            "Mental Wellness": [
+              "Mind and Balance"
+            ],
+            "Child and Teen Health": [
+              "Child and Teen Health"
+            ],
+            "Pregnancy and Infant Health": [
+              "Pregnancy and Infant Health"
+            ],
+            "Sexual Health and Caregiving": [
+              "Sexual Health and Caregiving"
+            ],
+            "Substance Addiction": [
+              "Intoxicates and Addictions"
+            ],
+            "Travel Health": [
+              "FIGHT and Travel Health"
+            ],
+            "Health Safety Advisory": [
+              "Alerts and Advisories"
+            ]
+          },
+          "cost-and-financing": {
+            "Cost and Financing": [
+              "Conditions and Illnesses"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "63491ce0",
+      "name": "params:l1_mappings",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "f6eef6ee",
+      "name": "params:l2_mappings",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "parameters",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": null,
+      "stats": null
+    },
+    {
+      "id": "38677b33",
+      "name": "all_contents_mapped",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "data",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": "partitions.partitioned_dataset.PartitionedDataset",
+      "stats": null
+    },
+    {
+      "id": "362704c6",
+      "name": "merge_data_node",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing"
+      ],
+      "type": "task",
+      "modular_pipelines": null,
+      "parameters": {}
+    },
+    {
+      "id": "aac5126e",
+      "name": "merged_data",
+      "tags": [],
+      "pipelines": [
+        "__default__",
+        "data_processing",
+        "feature_engineering"
+      ],
+      "type": "data",
+      "modular_pipelines": null,
+      "layer": null,
+      "dataset_type": "pandas.parquet_dataset.ParquetDataset",
+      "stats": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "c39699fc",
+      "target": "f6d77ba2"
+    },
+    {
+      "source": "e0cbc2bc",
+      "target": "7b621a30"
+    },
+    {
+      "source": "b9e757c4",
+      "target": "f6d77ba2"
+    },
+    {
+      "source": "1067bc4a",
+      "target": "3513c6bf"
+    },
+    {
+      "source": "f6eef6ee",
+      "target": "9c0c1990"
+    },
+    {
+      "source": "8a8953d3",
+      "target": "3513c6bf"
+    },
+    {
+      "source": "63491ce0",
+      "target": "9c0c1990"
+    },
+    {
+      "source": "cc87abde",
+      "target": "7b621a30"
+    },
+    {
+      "source": "586ac0f0",
+      "target": "9c0c1990"
+    },
+    {
+      "source": "3513c6bf",
+      "target": "b9e757c4"
+    },
+    {
+      "source": "6321ab1d",
+      "target": "7b621a30"
+    },
+    {
+      "source": "9c0c1990",
+      "target": "38677b33"
+    },
+    {
+      "source": "7b621a30",
+      "target": "586ac0f0"
+    },
+    {
+      "source": "f6d77ba2",
+      "target": "91882ca7"
+    },
+    {
+      "source": "91882ca7",
+      "target": "7b621a30"
+    },
+    {
+      "source": "a0ca961d",
+      "target": "f6d77ba2"
+    },
+    {
+      "source": "af7afc3e",
+      "target": "3513c6bf"
+    },
+    {
+      "source": "362704c6",
+      "target": "aac5126e"
+    },
+    {
+      "source": "7b621a30",
+      "target": "9c6ef664"
+    },
+    {
+      "source": "38677b33",
+      "target": "362704c6"
+    },
+    {
+      "source": "81090966",
+      "target": "3513c6bf"
+    }
+  ],
+  "layers": [],
+  "tags": [],
+  "pipelines": [
+    {
+      "id": "__default__",
+      "name": "__default__"
+    },
+    {
+      "id": "clustering",
+      "name": "clustering"
+    },
+    {
+      "id": "data_processing",
+      "name": "data_processing"
+    },
+    {
+      "id": "feature_engineering",
+      "name": "feature_engineering"
+    }
+  ],
+  "modular_pipelines": {
+    "__root__": {
+      "id": "__root__",
+      "name": "__root__",
+      "inputs": [],
+      "outputs": [],
+      "children": [
+        {
+          "id": "362704c6",
+          "type": "task"
+        },
+        {
+          "id": "af7afc3e",
+          "type": "parameters"
+        },
+        {
+          "id": "3513c6bf",
+          "type": "task"
+        },
+        {
+          "id": "af7afc3e",
+          "type": "data"
+        },
+        {
+          "id": "7b621a30",
+          "type": "task"
+        },
+        {
+          "id": "e0cbc2bc",
+          "type": "parameters"
+        },
+        {
+          "id": "81090966",
+          "type": "parameters"
+        },
+        {
+          "id": "9c6ef664",
+          "type": "data"
+        },
+        {
+          "id": "f6d77ba2",
+          "type": "task"
+        },
+        {
+          "id": "a0ca961d",
+          "type": "data"
+        },
+        {
+          "id": "e0cbc2bc",
+          "type": "data"
+        },
+        {
+          "id": "38677b33",
+          "type": "data"
+        },
+        {
+          "id": "81090966",
+          "type": "data"
+        },
+        {
+          "id": "9c0c1990",
+          "type": "task"
+        },
+        {
+          "id": "f6eef6ee",
+          "type": "parameters"
+        },
+        {
+          "id": "63491ce0",
+          "type": "parameters"
+        },
+        {
+          "id": "c39699fc",
+          "type": "parameters"
+        },
+        {
+          "id": "63491ce0",
+          "type": "data"
+        },
+        {
+          "id": "f6eef6ee",
+          "type": "data"
+        },
+        {
+          "id": "cc87abde",
+          "type": "parameters"
+        },
+        {
+          "id": "c39699fc",
+          "type": "data"
+        },
+        {
+          "id": "8a8953d3",
+          "type": "parameters"
+        },
+        {
+          "id": "1067bc4a",
+          "type": "data"
+        },
+        {
+          "id": "586ac0f0",
+          "type": "data"
+        },
+        {
+          "id": "cc87abde",
+          "type": "data"
+        },
+        {
+          "id": "6321ab1d",
+          "type": "parameters"
+        },
+        {
+          "id": "8a8953d3",
+          "type": "data"
+        },
+        {
+          "id": "b9e757c4",
+          "type": "data"
+        },
+        {
+          "id": "6321ab1d",
+          "type": "data"
+        },
+        {
+          "id": "aac5126e",
+          "type": "data"
+        },
+        {
+          "id": "91882ca7",
+          "type": "data"
+        }
+      ]
+    }
+  },
+  "selected_pipeline": "data_processing"
+}
